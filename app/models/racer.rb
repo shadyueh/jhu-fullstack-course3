@@ -32,4 +32,11 @@ class Racer
   	return result
   end
 
+  def self.find id
+    Rails.logger.debug {"getting racer #{id}"}
+    _id = (id.is_a? String) ? BSON::ObjectId.from_string(id) : id
+    result=self.collection.find(:_id=>_id).first
+	return result.nil? ? nil : Racer.new(result)
+  end
+
 end
